@@ -50,15 +50,25 @@ export default ({
 
         return(
             <View style={repoStyles.container}>
+                <View style={{flexDirection:'row'}}>
+
                 <Image
                 source={{
                     uri: ownerAvatarUrl
                 }}
-                style={{width:50,height:50,marginBottom:20}}
+                style={{width:50,height:50}}
                 />
-                <View>
 
-            </View>
+                <View style={{marginLeft:20,marginBottom:20}}>
+                    <Text style={{fontSize:theme.fontSizes.subheading,marginBottom:10}}>{fullName}</Text>
+                    <Text style={{color:'grey',fontSize:theme.fontSizes.body,marginBottom:10}}>{description}</Text>
+                    <Text style={{
+                        color:'white',backgroundColor:theme.colors.primary,marginBottom:10,
+                        width:100,paddingVertical:10,borderRadius:5,textAlign:'center'
+                        }}>{language}</Text>
+                </View>
+
+                </View>
                 <FlatList data={otherRowData}
                     style={{flexDirection:'row',justifyContent:'space-between',alignContent:'center'}}
                     ItemSeparatorComponent={() => <View style={{width:100}}/>}

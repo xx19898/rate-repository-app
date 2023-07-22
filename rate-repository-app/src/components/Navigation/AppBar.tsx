@@ -1,4 +1,4 @@
-import { View, StyleSheet, FlatList, Pressable, Text } from 'react-native';
+import { View, StyleSheet, FlatList, Pressable, Text, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import React from 'react'
 import {useState} from 'react';
@@ -7,8 +7,9 @@ import AppBarTab from './AppBarTab';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.secondary,
-    height: 60,
+    backgroundColor: theme.colors.neutral,
+    height: 30,
+    paddingTop: 0,
     alignContent:'center',
     justifyContent:'center',
     alignItems:'center',
@@ -20,24 +21,13 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const [chosenTab,setChosenTab] = useState('Main')
+  const [chosenTab,setChosenTab] = useState('Repositories')
 
   return <View style={styles.container}>
-    <FlatList
-    style={{padding:10}}
-    contentContainerStyle={{justifyContent: 'center',alignContent:'center',alignItems:'center'}}
-    data={[
-        {text:'Repositories'},
-        {text:'Main'}
-    ]}
-    horizontal
-    ItemSeparatorComponent={() => <View style={{width:20}}/>}
-    renderItem={ ({item}) => <AppBarTab
-    callback={(text:string) => setChosenTab(text)}
-    text={item.text}
-    chosenTab={chosenTab}
-    />}
-    />
+    <ScrollView style={{flexDirection:'row'}} horizontal>
+      <AppBarTab buttonText='Repositories' chosenTab={chosenTab} redirect='/' setChosen={setChosenTab}/>
+      <AppBarTab buttonText='Sign In' chosenTab={chosenTab} redirect='/signIn' setChosen={setChosenTab}/>
+    </ScrollView>
   </View>;
 };
 
