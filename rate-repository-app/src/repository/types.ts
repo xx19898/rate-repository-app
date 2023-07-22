@@ -1,4 +1,4 @@
-export type Repository = {
+export type IRepository = {
     id: string,
     fullName: string,
     description: string,

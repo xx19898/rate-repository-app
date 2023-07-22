@@ -1,6 +1,6 @@
-import { Repository } from "./types";
+import { IRepository } from "./types";
 
-export const repositories: Repository[] = [
+export const repositories: IRepository[] = [
     {
         id: 'jaredpalmer.formik',
         fullName: 'jaredpalmer/formik',
