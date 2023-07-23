@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 
 
 export const theme = {
@@ -14,7 +15,7 @@ export const theme = {
         heading: 38
       },
       fonts: {
-        main: 'System',
+        main: Platform.OS === 'android' ? 'Roboto' : 'Arial',
       },
       fontWeights: {
         normal: '400',

@@ -6,6 +6,7 @@ import { RepositoryList } from './RepoVisualisation/RepositoryList';
 import { repositories } from '../repository/repositoryData';
 import AppBar from './Navigation/AppBar';
 import SignIn from './Auth/SignIn';
+import useRepositories from '../hooks/useRepositories';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,6 +17,8 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  const {repositories,loading,refetch} = useRepositories();
+
   return (
     <View style={styles.container}>
       <AppBar />

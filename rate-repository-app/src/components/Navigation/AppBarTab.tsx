@@ -1,6 +1,8 @@
-import { Pressable, StyleSheet, Text } from "react-native"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import React from 'react'
 import {useNavigate} from 'react-router-native'
+import CustomText from "../CustomText"
+import { theme } from "../../../theme"
 
 
 
@@ -19,13 +21,23 @@ export default ({redirect,buttonText,chosenTab,setChosen}:AppBarTab) => {
             navigate(redirect)
             setChosen(buttonText)
             }} style={{marginHorizontal:10}}>
-            <Text style={{
-                textDecorationLine: chosenTab === buttonText ? 'underline' : 'none',
-                textDecorationColor:'black',
-
-                }}>
-                {buttonText}
-            </Text>
+            {
+                chosenTab === buttonText ?
+                <View style={{borderBottomWidth: 2,borderBottomColor:'black'}}>
+                    <CustomText customParams={{
+                        fontSize: theme.fontSizes.subheading,
+                        paddingBottom:4,
+                        }}>
+                        {buttonText}
+                    </CustomText>
+                </View>
+                :
+                <CustomText customParams={{
+                    fontSize: theme.fontSizes.subheading,
+                    }}>
+                    {buttonText}
+                </CustomText>
+            }
         </Pressable>
     )
 }

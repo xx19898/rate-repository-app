@@ -7,9 +7,8 @@ import AppBarTab from './AppBarTab';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.neutral,
-    height: 30,
-    paddingTop: 0,
+    backgroundColor: theme.colors.altSecondary,
+    height:60,
     alignContent:'center',
     justifyContent:'center',
     alignItems:'center',
@@ -17,6 +16,11 @@ const styles = StyleSheet.create({
   Text:{
     fontWeight: '600',
     fontSize: theme.fontSizes.subheading
+  },
+  scrollView:{
+    alignContent:'center',
+    justifyContent:'center',
+    alignItems:'center'
   }
 });
 
@@ -24,7 +28,7 @@ const AppBar = () => {
   const [chosenTab,setChosenTab] = useState('Repositories')
 
   return <View style={styles.container}>
-    <ScrollView style={{flexDirection:'row'}} horizontal>
+    <ScrollView contentContainerStyle={{...styles.scrollView}} horizontal>
       <AppBarTab buttonText='Repositories' chosenTab={chosenTab} redirect='/' setChosen={setChosenTab}/>
       <AppBarTab buttonText='Sign In' chosenTab={chosenTab} redirect='/signIn' setChosen={setChosenTab}/>
     </ScrollView>

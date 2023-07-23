@@ -3,6 +3,7 @@ import { theme } from "../../../theme"
 import React from 'react';
 import { Formik } from "formik";
 import * as yup from 'yup';
+import CustomText from "../CustomText";
 
 const styles = StyleSheet.create({
     usernameInput:{
@@ -45,7 +46,8 @@ export default () => {
             alignContent:'center',
             width:width,
             flex:1}}>
-            <Text style={{fontSize:theme.fontSizes.heading}}>Sign In</Text>
+            <Text style={{fontSize:60}}>Sign In</Text>
+            <CustomText customParams={{fontSize:60}}>Sign In</CustomText>
             <Formik
             validateOnChange={true}
             initialValues={{username:'',password:''}}
@@ -62,9 +64,9 @@ export default () => {
                         placeholder="Username"
                         />
                         {
-                            errors.username && <Text style={{borderWidth:2,borderStyle:'solid',borderRadius:5,padding:10,borderColor:'red'}}>
+                            errors.username && <CustomText customParams={{borderWidth:2,borderStyle:'solid',borderRadius:5,padding:10,borderColor:'red'}}>
                                 {errors.username}
-                            </Text>
+                            </CustomText>
                         }
                         <TextInput
                         style={errors.password ? {...styles.passwordInput,borderWidth:2,borderStyle:'solid',borderRadius:5,borderColor:'red'} : styles.passwordInput}
@@ -74,11 +76,13 @@ export default () => {
                         placeholder="Password"
                         />
                         {
-                            errors.password && <Text style={{borderWidth:2,borderRadius:5,borderStyle:'solid',padding:20,borderColor:'red'}}>
+                            errors.password && <CustomText customParams={{borderWidth:2,borderRadius:5,borderStyle:'solid',padding:20,borderColor:'red'}}>
                                 {errors.password}
-                            </Text>
+                            </CustomText>
                         }
-                        <Button disabled={!(errors)} onPress={
+                        <Button
+                        disabled={!(errors)}
+                        onPress={
                             handleSubmit as (values:
                                 GestureResponderEvent |
                                 React.FormEvent<HTMLFormElement> |
