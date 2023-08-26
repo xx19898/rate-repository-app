@@ -1,9 +1,14 @@
 import { Button, Dimensions, GestureResponderEvent, StyleSheet, Text, TextInput, View } from "react-native"
 import { theme } from "../../../theme"
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import CustomText from "../CustomText";
+import useSignIn from "../../hooks/useSignIn";
+import { useApolloClient, useMutation } from "@apollo/client";
+import { AUTHENTICATE } from "../../graphql/mutations";
+import AuthStorageContext from "../../contexts/AuthStorageContext";
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
     usernameInput:{
@@ -38,6 +43,10 @@ const validationSchema = yup.object().shape({
 export default () => {
 
     var width = Dimensions.get('window').width; //full width
+    const {signIn,result} = useSignIn()
+    const apolloClient = useApolloClient()
+    const navigate = useNavigate()
+    const authStorage = useContext(AuthStorageContext);
 
     return(
         <View style={{
@@ -51,7 +60,7 @@ export default () => {
             <Formik
             validateOnChange={true}
             initialValues={{username:'',password:''}}
-            onSubmit={values => console.log({values})}
+            onSubmit={handleSubmit}
             validationSchema={validationSchema}
             >
                 {({ handleChange, handleBlur, handleSubmit, values,errors}) => (
@@ -71,6 +80,7 @@ export default () => {
                         <TextInput
                         style={errors.password ? {...styles.passwordInput,borderWidth:2,borderStyle:'solid',borderRadius:5,borderColor:'red'} : styles.passwordInput}
                         onChangeText={handleChange('password')}
+                        textContentType="password"
                         onBlur={handleBlur('password')}
                         value={values.password}
                         placeholder="Password"
@@ -93,4 +103,17 @@ export default () => {
             </Formik>
         </View>
     )
+
+    async function handleSubmit ({username,password}:{username:string,password:string}){
+        const {data,errors} = await signIn({variables:{credentials:{username,password}}})
+        console.log({data})
+        console.log({token:data.authenticate.accessToken})
+        if(data.authenticate.accessToken){
+            await authStorage.setAccessToken(data.authenticate.accessToken)
+            apolloClient.resetStore()
+            console.log('NAVIGATING')
+            navigate('/')
+        }
+
+    }
 }

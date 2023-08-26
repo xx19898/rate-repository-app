@@ -1,10 +1,16 @@
 import { useQuery } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { GET_REPOSITORIES } from '../graphql/queries';
 
 const useRepositories = () => {
-  const {data: repositories, loading, error, refetch} = useQuery(GET_REPOSITORIES)
-
+  const {data, loading, error, refetch} = useQuery(GET_REPOSITORIES)
+  console.log({data})
+  const repositories = useMemo(() => {
+    if(data) return data.repositories.edges.map((edge) => edge['node'])
+    else{
+  return []
+}
+  },[data])
   return { repositories, loading, refetch: refetch };
 };
 
