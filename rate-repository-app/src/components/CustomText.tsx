@@ -11,7 +11,6 @@ export default ({customParams,children}:{customParams: Record<string,Object | nu
         'Lugrasimo-Regular':require('../../assets/fonts/Lugrasimo-Regular.ttf')
       });
 
-    console.log({fontsLoaded})
 
     if(!fontsLoaded) return null
 

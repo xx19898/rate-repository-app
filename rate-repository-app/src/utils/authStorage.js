@@ -16,9 +16,21 @@ class AuthStorage {
     return expirationDate
   }
 
+  async clearStorage(){
+    await AsyncStorage.removeItem(`${this.namespace}/loggedUser`)
+    await AsyncStorage.removeItem(`${this.namespace}/expirationDate`)
+    await AsyncStorage.removeItem(`${this.namespace}/accessToken`)
+  }
+
   async getLoggedUser(){
     const loggedUser = await AsyncStorage.getItem(`${this.namespace}/loggedUser`)
     return loggedUser
+  }
+
+  async isLogged(){
+    const loggedUser = await AsyncStorage.getItem(`${this.namespace}/loggedUser`)
+    console.log({loggedUser})
+    return loggedUser != null
   }
 
   async setExpirationDate(expirationDate){

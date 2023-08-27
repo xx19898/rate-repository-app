@@ -49,7 +49,7 @@ export default ({
         ]
 
         return(
-            <View style={repoStyles.container}>
+            <View testID="repositoryItem" style={repoStyles.container}>
                 <View style={{flexDirection:'row'}}>
 
                 <Image

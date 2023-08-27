@@ -9,6 +9,7 @@ import SignIn from './Auth/SignIn';
 import useRepositories from '../hooks/useRepositories';
 import { GET_REPOSITORIES } from '../graphql/queries';
 import { useQuery } from '@apollo/client';
+import SignOut from './Auth/SignOut';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +27,7 @@ const Main = () => {
       <Routes>
         <Route path='/' element={<RepositoryList repositories={repositories} />} />
         <Route path='/signIn' element={<SignIn />}/>
+        <Route path='/signOut' element={<SignOut />} />
         <Route path='*' element={<Navigate to="/" replace />} />
       </Routes>
     </View>
