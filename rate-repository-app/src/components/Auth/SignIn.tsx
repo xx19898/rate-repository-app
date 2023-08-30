@@ -9,6 +9,7 @@ import { useApolloClient, useMutation } from "@apollo/client";
 import { AUTHENTICATE } from "../../graphql/mutations";
 import AuthStorageContext from "../../contexts/AuthStorageContext";
 import { useNavigate } from "react-router-native";
+import SignInForm from "./SignInForm";
 
 const styles = StyleSheet.create({
     usernameInput:{
@@ -51,59 +52,7 @@ export default () => {
     const authStorage = authContext.authStorage
     console.log({authContext})
     return(
-        <View style={{
-            alignItems:'center',
-            justifyContent:'center',
-            alignContent:'center',
-            width:width,
-            flex:1}}>
-            <Text style={{fontSize:60}}>Sign In</Text>
-            <CustomText customParams={{fontSize:60}}>Sign In</CustomText>
-            <Formik
-            validateOnChange={true}
-            initialValues={{username:'',password:''}}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-            >
-                {({ handleChange, handleBlur, handleSubmit, values,errors}) => (
-                    <View style={{alignContent:'center',justifyContent:'center',alignItems:'center'}}>
-                        <TextInput
-                        style={errors.username ? {...styles.usernameInput,borderWidth:2,borderRadius: 5,borderStyle:'solid',borderColor:'red'} : styles.usernameInput}
-                        onChangeText={handleChange('username')}
-                        onBlur={handleBlur('username')}
-                        value={values.username}
-                        placeholder="Username"
-                        />
-                        {
-                            errors.username && <CustomText customParams={{borderWidth:2,borderStyle:'solid',borderRadius:5,padding:10,borderColor:'red'}}>
-                                {errors.username}
-                            </CustomText>
-                        }
-                        <TextInput
-                        style={errors.password ? {...styles.passwordInput,borderWidth:2,borderStyle:'solid',borderRadius:5,borderColor:'red'} : styles.passwordInput}
-                        onChangeText={handleChange('password')}
-                        textContentType="password"
-                        onBlur={handleBlur('password')}
-                        value={values.password}
-                        placeholder="Password"
-                        />
-                        {
-                            errors.password && <CustomText customParams={{borderWidth:2,borderRadius:5,borderStyle:'solid',padding:20,borderColor:'red'}}>
-                                {errors.password}
-                            </CustomText>
-                        }
-                        <Button
-                        disabled={!(errors)}
-                        onPress={
-                            handleSubmit as (values:
-                                GestureResponderEvent |
-                                React.FormEvent<HTMLFormElement> |
-                                undefined) => void
-                        } title='Sign In' />
-                    </View>
-                )}
-            </Formik>
-        </View>
+        <SignInForm onSignIn={handleSubmit}/>
     )
 
     async function handleSubmit ({username,password}:{username:string,password:string}){

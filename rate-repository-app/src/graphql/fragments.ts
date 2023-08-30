@@ -10,3 +10,9 @@ export const repoFragment =  `
             reviewCount
             ownerAvatarUrl
 `
+
+export const repoFragmentWithUrl = `
+${repoFragment}
+url
+`
+

@@ -31,7 +31,8 @@ const AppBar = () => {
   const authContext = useContext(AuthStorageContext)
   const loggedIn = authContext.loggedIn
 
-  return <View style={styles.container}>
+  return(
+  <View style={styles.container}>
     <ScrollView contentContainerStyle={{...styles.scrollView}} horizontal>
       <AppBarTab buttonText='Repositories' chosenTab={chosenTab} redirect='/' setChosen={setChosenTab}/>
       {
@@ -40,7 +41,7 @@ const AppBar = () => {
         <AppBarTab buttonText='Sign In' chosenTab={chosenTab} redirect='/signIn' setChosen={setChosenTab}/>
       }
     </ScrollView>
-  </View>;
+  </View>);
 };
 
 export default AppBar;

@@ -10,6 +10,7 @@ import useRepositories from '../hooks/useRepositories';
 import { GET_REPOSITORIES } from '../graphql/queries';
 import { useQuery } from '@apollo/client';
 import SignOut from './Auth/SignOut';
+import SingleRepositoryPage from './SingleRepositoryView/SingleRepo';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +27,7 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path='/' element={<RepositoryList repositories={repositories} />} />
+        <Route path='/repository/:repoId' element={<SingleRepositoryPage />} />
         <Route path='/signIn' element={<SignIn />}/>
         <Route path='/signOut' element={<SignOut />} />
         <Route path='*' element={<Navigate to="/" replace />} />
