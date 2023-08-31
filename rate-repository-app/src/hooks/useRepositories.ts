@@ -1,11 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { useState, useEffect, useMemo } from 'react';
 import { GET_REPOSITORIES } from '../graphql/queries';
-import { repoFragment } from '../graphql/fragments';
+import { CORE_REPO_FIELDS } from '../graphql/fragments';
 
 
 
 const useRepositories = () => {
+
+  console.log({x:CORE_REPO_FIELDS})
   const {data, loading, error, refetch} = useQuery(GET_REPOSITORIES)
   console.log({data})
   const repositories = useMemo(() => {

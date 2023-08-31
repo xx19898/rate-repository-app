@@ -3,12 +3,8 @@ module.exports = {
     documents: ['src/graphql/*.ts'],
     overwrite: true,
     generates: {
-      "./src/types.ts": {
-        plugins: [
-          "typescript",
-          "typescript-operations",
-          "typescript-react-apollo"
-        ],
+    "./src/gql/": {
+        preset:'client',
         config: {
           skipTypename: false,
           withHooks: true,
