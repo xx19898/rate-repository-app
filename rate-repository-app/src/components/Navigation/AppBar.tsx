@@ -36,8 +36,11 @@ const AppBar = () => {
     <ScrollView contentContainerStyle={{...styles.scrollView}} horizontal>
       <AppBarTab buttonText='Repositories' chosenTab={chosenTab} redirect='/' setChosen={setChosenTab}/>
       {
-        loggedIn ? <AppBarTab buttonText='Sign Out' chosenTab={chosenTab} redirect='/signOut' setChosen={setChosenTab}/>
-        :
+        loggedIn ?
+        <>
+        <AppBarTab buttonText='Sign Out' chosenTab={chosenTab} redirect='/signOut' setChosen={setChosenTab}/>
+        <AppBarTab buttonText='Create review' chosenTab={chosenTab} redirect='/createReview' setChosen={setChosenTab}/>
+        </>        :
         <AppBarTab buttonText='Sign In' chosenTab={chosenTab} redirect='/signIn' setChosen={setChosenTab}/>
       }
     </ScrollView>

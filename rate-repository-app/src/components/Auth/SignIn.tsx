@@ -43,35 +43,29 @@ const validationSchema = yup.object().shape({
 
 export default () => {
 
-    var width = Dimensions.get('window').width; //full width
+    var width = Dimensions.get('window').width
     const {signIn,result} = useSignIn()
     const apolloClient = useApolloClient()
     const navigate = useNavigate()
     const authContext = useContext(AuthStorageContext)
     const setLoggedIn = authContext.setLoggedIn
     const authStorage = authContext.authStorage
-    console.log({authContext})
     return(
         <SignInForm onSignIn={handleSubmit}/>
     )
 
     async function handleSubmit ({username,password}:{username:string,password:string}){
         const {data,errors} = await signIn({variables:{credentials:{username,password}}})
-        console.log({data})
-        if(data.authenticate.accessToken){
+        if(!errors && data.authenticate.accessToken){
             await authStorage.setAccessToken(data.authenticate.accessToken)
             await authStorage.setExpirationDate(data.authenticate.expiresAt)
             await authStorage.setLoggedUser(data.authenticate.user.username)
-
             const accessToken = await authStorage.getLoggedUser()
             const expDate = await authStorage.getExpirationDate()
             const loggedUser = await authStorage.getLoggedUser()
-            console.log({accessToken,expDate,loggedUser})
             apolloClient.resetStore()
-            console.log('NAVIGATING')
             setLoggedIn(true)
             navigate('/')
         }
-
     }
 }
