@@ -25,7 +25,7 @@ const RepositoryList = ({repositories}:{repositories:IRepository[]}) => {
         data={repositories}
         ItemSeparatorComponent={ItemSeparator}
         key='xd'
-        renderItem={({item}) => <Pressable onPress={() => navigate(`/repository/${item.id}`)}><RepositoryListItem {...item} /></Pressable>}
+        renderItem={({item}) => <Pressable onPress={() => navigate(`/repository/${item.id}`)}><RepositoryListItem {...item} url={undefined} /></Pressable>}
         />
     )
 }
