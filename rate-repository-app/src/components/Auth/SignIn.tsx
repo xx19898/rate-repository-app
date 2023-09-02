@@ -51,8 +51,10 @@ export default () => {
     const setLoggedIn = authContext.setLoggedIn
     const authStorage = authContext.authStorage
     return(
-        <SignInForm onSignIn={handleSubmit}/>
+        <SignInForm onSignIn={handleSubmit} />
     )
+
+    //TODO: put this in own component
 
     async function handleSubmit ({username,password}:{username:string,password:string}){
         const {data,errors} = await signIn({variables:{credentials:{username,password}}})

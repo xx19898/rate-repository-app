@@ -38,6 +38,7 @@ const validationSchema = yup.object().shape({
 interface ISignInForm{
     onSignIn: ({username,password}:{username:string,password:string}) => void,
 }
+
 export default (params: ISignInForm) => {
     var width = Dimensions.get('window').width
 

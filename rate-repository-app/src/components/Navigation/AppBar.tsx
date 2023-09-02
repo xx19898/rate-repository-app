@@ -5,11 +5,13 @@ import {useState, useEffect, useContext,useRef} from 'react';
 import { theme } from '../../../theme';
 import AppBarTab from './AppBarTab';
 import AuthStorageContext from '../../contexts/AuthStorageContext';
+import { TabContext } from '../../contexts/TabContext';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.altSecondary,
     height:60,
+    borderRadius:10,
     alignContent:'center',
     justifyContent:'center',
     alignItems:'center',
@@ -26,8 +28,9 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const [chosenTab,setChosenTab] = useState('Repositories')
-
+  const chosenTab = useContext(TabContext).chosenTab
+  const setChosenTab = useContext(TabContext).setChosenTab
+  console.log({chosenTab})
   const authContext = useContext(AuthStorageContext)
   const loggedIn = authContext.loggedIn
 
@@ -41,7 +44,10 @@ const AppBar = () => {
         <AppBarTab buttonText='Sign Out' chosenTab={chosenTab} redirect='/signOut' setChosen={setChosenTab}/>
         <AppBarTab buttonText='Create review' chosenTab={chosenTab} redirect='/createReview' setChosen={setChosenTab}/>
         </>        :
+        <>
         <AppBarTab buttonText='Sign In' chosenTab={chosenTab} redirect='/signIn' setChosen={setChosenTab}/>
+        <AppBarTab buttonText='Sign Up' chosenTab={chosenTab} redirect='/signUp' setChosen={setChosenTab}/>
+        </>
       }
     </ScrollView>
   </View>);

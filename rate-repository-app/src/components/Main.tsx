@@ -12,6 +12,7 @@ import { useQuery } from '@apollo/client';
 import SignOut from './Auth/SignOut';
 import SingleRepositoryPage from './SingleRepositoryView/SingleRepo';
 import ReviewCreation from './ReviewCreation/ReviewCreation';
+import SignUp from './Auth/SignUp';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,6 +32,7 @@ const Main = () => {
         <Route path='/repository/:repoId' element={<SingleRepositoryPage />} />
         <Route path='/signIn' element={<SignIn />}/>
         <Route path='/signOut' element={<SignOut />} />
+        <Route path='/signUp' element={<SignUp />} />
         <Route path='/createReview' element={<ReviewCreation />} />
         <Route path='*' element={<Navigate to="/" replace />} />
       </Routes>
