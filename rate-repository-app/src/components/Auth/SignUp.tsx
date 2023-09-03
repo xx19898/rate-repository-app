@@ -1,5 +1,5 @@
 import {View,TextInput,StyleSheet,Button,ScrollView} from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
 import { useNavigate } from 'react-router-native'
 import { theme } from '../../../theme'
@@ -8,6 +8,7 @@ import { Formik } from 'formik'
 import useSignUp from '../../hooks/useSignUp'
 import useSignIn from '../../hooks/useSignIn'
 import useCustomNavigate from '../../hooks/useCustomNavigate'
+import useSignInAndSaveAccessToken from '../../hooks/useSignInAndSaveAccessToken'
 
 const styles = StyleSheet.create({
     mainContainer:{
@@ -55,21 +56,20 @@ const validationSchema = yup.object().shape({
 
 export default () => {
 
-    const navigate = useNavigate()
     const {signUp,error,result} = useSignUp()
-    const {customNavigate} = useCustomNavigate()
-    const {signIn,result:signInResult} = useSignIn()
+    const signInAndRedirect = useSignInAndSaveAccessToken()
 
-    if(signInResult){
-        customNavigate('repositories')
-    }
+    const [username,setUsername] = useState('')
+    const [password,setPassword] = useState('')
 
-    if(result) {
-        signIn({variables:{credentials:{
-            username:result.user.username,
-            password:result.user.password
-        }}})
-    }
+    useEffect(() => {
+        if(result){
+            signInAndRedirect({
+                username:username,
+                password:password
+            })
+        }
+    },[result])
 
     return(
         <View style={styles.mainContainer}>
@@ -77,19 +77,23 @@ export default () => {
             <Formik
             validateOnChange={true}
             initialValues={{username:'',password:'',passwordConfirmation: ''}}
-            onSubmit={ values => signUp({variables:{
+            onSubmit={ values => {
+
+                setUsername(values.username)
+                setPassword(values.password)
+
+                signUp({variables:{
                 user:{
                     username:values.username,
                     password:values.password
                 }
-            }})
+            }})}
         }
             validationSchema={validationSchema}
             >
                 {
                     ({ handleChange, handleBlur, handleSubmit, values, errors }) => (
                         <View style={{
-
                             gap:20,
                             height:'auto',
                             borderRadius: 5,

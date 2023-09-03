@@ -1,10 +1,12 @@
 import { Formik } from "formik"
 import {TextInput, View, Text, StyleSheet, ScrollView, Button, GestureResponderEvent} from 'react-native'
 import React from 'react'
+import {useEffect} from 'react'
 import * as yup from 'yup';
 import CustomText from "../CustomText";
 import { theme } from "../../../theme";
 import useCreateReview from "../../hooks/useCreateReview";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
 
 const styles = StyleSheet.create({
     textInput:{
@@ -48,7 +50,13 @@ const reviewCreationFormValidationSchema = yup.object().shape({
 
 export default () => {
     const { createReview, result } = useCreateReview()
+    const {customNavigate} = useCustomNavigate()
     console.log({result})
+    useEffect(() => {
+        if(result){
+            customNavigate(`/repository/${result.createReview.repositoryId}`,'Repositories')
+        }
+    },[result])
     return(
         <Formik
         validationSchema={reviewCreationFormValidationSchema}

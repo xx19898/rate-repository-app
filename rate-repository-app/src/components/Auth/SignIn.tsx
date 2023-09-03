@@ -10,6 +10,7 @@ import { AUTHENTICATE } from "../../graphql/mutations";
 import AuthStorageContext from "../../contexts/AuthStorageContext";
 import { useNavigate } from "react-router-native";
 import SignInForm from "./SignInForm";
+import useSignInAndSaveAccessToken from "../../hooks/useSignInAndSaveAccessToken";
 
 const styles = StyleSheet.create({
     usernameInput:{
@@ -42,32 +43,9 @@ const validationSchema = yup.object().shape({
 })
 
 export default () => {
+    const handleSubmit = useSignInAndSaveAccessToken();
 
-    var width = Dimensions.get('window').width
-    const {signIn,result} = useSignIn()
-    const apolloClient = useApolloClient()
-    const navigate = useNavigate()
-    const authContext = useContext(AuthStorageContext)
-    const setLoggedIn = authContext.setLoggedIn
-    const authStorage = authContext.authStorage
     return(
-        <SignInForm onSignIn={handleSubmit} />
+        <SignInForm onSignIn={handleSubmit}/>
     )
-
-    //TODO: put this in own component
-
-    async function handleSubmit ({username,password}:{username:string,password:string}){
-        const {data,errors} = await signIn({variables:{credentials:{username,password}}})
-        if(!errors && data.authenticate.accessToken){
-            await authStorage.setAccessToken(data.authenticate.accessToken)
-            await authStorage.setExpirationDate(data.authenticate.expiresAt)
-            await authStorage.setLoggedUser(data.authenticate.user.username)
-            const accessToken = await authStorage.getLoggedUser()
-            const expDate = await authStorage.getExpirationDate()
-            const loggedUser = await authStorage.getLoggedUser()
-            apolloClient.resetStore()
-            setLoggedIn(true)
-            navigate('/')
-        }
-    }
 }
