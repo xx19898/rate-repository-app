@@ -1,12 +1,12 @@
 import Constants from 'expo-constants';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-native';
 import { Text, StyleSheet, View } from 'react-native';
 import { RepositoryList } from './RepoVisualisation/RepositoryList';
 import { repositories } from '../repository/repositoryData';
 import AppBar from './Navigation/AppBar';
 import SignIn from './Auth/SignIn';
-import useRepositories from '../hooks/useRepositories';
+import useRepositories, { RepositoryListOrderCriteria, RepositoryListOrderDirection } from '../hooks/useRepositories';
 import { GET_REPOSITORIES } from '../graphql/queries';
 import { useQuery } from '@apollo/client';
 import SignOut from './Auth/SignOut';
@@ -23,12 +23,22 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
-  const {repositories} = useRepositories()
-  return (
+
+  const [orderCriteria, setOrderCriteria] = useState<RepositoryListOrderCriteria>('CREATED_AT')
+  const [orderDirection,setOrderDirection] = useState<RepositoryListOrderDirection>('DESC')
+  const {repositories} = useRepositories({criteria:orderCriteria,order:orderDirection})
+
+  return(
     <View style={styles.container}>
       <AppBar />
       <Routes>
-        <Route path='/' element={<RepositoryList repositories={repositories} />} />
+        <Route path='/'
+        element={<RepositoryList
+        setOrderCriteria={setOrderCriteria}
+        currentOrderCriteria={orderCriteria}
+        setOrderDirection={setOrderDirection}
+        currentOrderDirection={orderDirection}
+        repositories={repositories} />} />
         <Route path='/repository/:repoId' element={<SingleRepositoryPage />} />
         <Route path='/signIn' element={<SignIn />}/>
         <Route path='/signOut' element={<SignOut />} />

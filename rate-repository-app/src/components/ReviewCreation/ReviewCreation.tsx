@@ -50,13 +50,14 @@ const reviewCreationFormValidationSchema = yup.object().shape({
 
 export default () => {
     const { createReview, result } = useCreateReview()
-    const {customNavigate} = useCustomNavigate()
-    console.log({result})
+    const { customNavigate } = useCustomNavigate()
+
     useEffect(() => {
         if(result){
             customNavigate(`/repository/${result.createReview.repositoryId}`,'Repositories')
         }
     },[result])
+
     return(
         <Formik
         validationSchema={reviewCreationFormValidationSchema}
