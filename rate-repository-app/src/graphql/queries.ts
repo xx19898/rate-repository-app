@@ -35,11 +35,13 @@ query me{
           user {
             username
           }
+          id
           rating
           createdAt
           repository {
             fullName
             url
+            id
           }
         }
       }

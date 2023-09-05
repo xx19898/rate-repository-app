@@ -9,7 +9,7 @@ import { theme } from "../../../theme"
 
 
 export default () => {
-
+    console.log('GOT HERE')
     const { repoId } = useParams()
     const { data: singleRepositoryData } = useRepository({repoId:repoId as string})
     const reviewData:Review[] = useMemo(() => {
